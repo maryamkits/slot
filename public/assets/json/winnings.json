@@ -1,0 +1,141 @@
+{
+  "grid": [
+    [ 3, 1, 2, 3, 4 ],
+    [ 4, 0, 1, 2, 5 ],
+    [ 5, 1, 2, 4, 5 ],
+    [ 5, 0, 1, 2, 3 ],
+    [ 4, 1, 2, 5, 5 ]
+  ],
+  "winlines": [
+    {
+      "payout": 20,
+      "positions":[ 
+        {
+          "column": 1,
+          "row": 1,
+          "symID": 1
+        }
+      ]
+    },
+    {
+      "payout": 100,
+      "positions": [
+        {
+          "column": 0,
+          "row": 1,
+          "symID": 1
+        },
+        { 
+          "column": 1,
+          "row": 2,
+          "symID": 1
+        },
+        {
+          "column": 2,
+          "row": 1,
+          "symID": 1
+        },
+        {
+          "column": 3,
+          "row": 2,
+          "symID": 1
+        },
+        {
+          "column": 4,
+          "row": 1,
+          "symID": 1
+        }
+      ]
+    },
+    {
+      "payout": 200,
+      "positions": [
+        {
+          "column": 0,
+          "row": 2,
+          "symID": 1
+        },
+        { 
+          "column": 1,
+          "row": 3,
+          "symID": 1
+        },
+        {
+          "column": 2,
+          "row": 2,
+          "symID": 1
+        },
+        {
+          "column": 3,
+          "row": 3,
+          "symID": 1
+        },
+        {
+          "column": 4,
+          "row": 2,
+          "symID": 1
+        }
+      ]
+    },
+    {
+      "payout": 100,
+      "positions": [
+        {
+          "column": 0,
+          "row": 1,
+          "symID": 1
+        },
+        { 
+          "column": 1,
+          "row": 1,
+          "symID": 0
+        },
+        {
+          "column": 2,
+          "row": 1,
+          "symID": 1
+        },
+        {
+          "column": 3,
+          "row": 1,
+          "symID": 0
+        },
+        {
+          "column": 4,
+          "row": 1,
+          "symID": 1
+        }
+      ]
+    },
+    {
+      "payout": 200,
+      "positions": [
+        {
+          "column": 0,
+          "row": 2,
+          "symID": 1
+        },
+        { 
+          "column": 1,
+          "row": 1,
+          "symID": 0
+        },
+        {
+          "column": 2,
+          "row": 2,
+          "symID": 1
+        },
+        {
+          "column": 3,
+          "row": 1,
+          "symID": 0
+        },
+        {
+          "column": 4,
+          "row": 2,
+          "symID": 1
+        }
+      ]
+    }
+  ]
+}
