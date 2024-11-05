@@ -27,11 +27,10 @@ export default class Reels extends PIXI.Container {
         this.symbolSize = CONSTANTS.GRID.SYMBOL_SIZE;
         this.reelWidth = CONSTANTS.GRID.REEL_WIDTH;
         this.initializeTextures();
-     
         addEventListeners(this);
     }
 
-     async loadAssets() {
+ async loadAssets() {
         const assetsToLoad = this.symbolKeys.map(key => `assets/sprites/${key}.jpg`);
         await PIXI.Assets.init()
         await PIXI.Assets.load(assetsToLoad);
@@ -48,7 +47,7 @@ export default class Reels extends PIXI.Container {
 
 
     public startPlay(app: any) {
-        animateReels(this, app);
+        animateReels(this);
     }
 
     get(index: number): any {

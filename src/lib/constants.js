@@ -28,7 +28,7 @@ export const CONSTANTS = {
         SIZE: 5,
         SYMBOL_SIZE: 100,
         SPACING: 10,
-        REEL_WIDTH: 155,
+        REEL_WIDTH: 120,
     },
     ANIMATION: {
         SPIN_DURATION: 3000,
@@ -36,7 +36,7 @@ export const CONSTANTS = {
         WIN_DURATION: 1000
     },
     SYMBOLS: {
-        KEYS: ['w_1', 'm_2', 'l_1', 'l_2', 'l_3', 'l_4', 'l_5', 'm_1', 'm_3', 'm_4', 'm_5'],
+        KEYS: ['w_1', 'm_2', 'l_1', 'l_2', 'l_3', 'l_4', 'm_1', 'm_3', 'm_4', 'm_5', 'l_5'],
         PATH: 'assets/sprites'
     },
     VIEWPORT: {

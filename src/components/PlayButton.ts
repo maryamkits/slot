@@ -4,25 +4,26 @@ import { EventEmitter } from 'events';
 import { EVENTS } from "../lib/constants.js";
 import { addEventListeners } from "../helpers/addEventListeners";
 
-const eventEmitter = new EventEmitter();
-export { eventEmitter };
-
 export class PlayButton extends PIXI.Container {
-    private button: PIXI.Graphics;
+    private button: PIXI.Sprite;
     private text: PIXI.Text;
     constructor(screenWidth: number, screenHeight: number) {
         super();
         addEventListeners(this);
-
-        this.button = new PIXI.Graphics();
-        this.button.beginFill(0xF05200); 
-        this.button.drawRoundedRect(0, 0, 100, 40, 10);
-        this.button.endFill();
+        const width = 120;
+        const height = 60;
+        const radius = 10;
         
+        const gradientTexture = this.createGradient(width, height, radius);
+        this.button = new PIXI.Sprite(gradientTexture);
+                
+        this.button.pivot.set(this.button.width / 2, this.button.height / 2);
+        this.button.position.set(screenWidth / 2, screenHeight  / 2);
+
         const text = new PIXI.Text('SPIN', {
             fill: 0xffffff,
             fontSize: 20,
-            fontWeight: 'bold',
+            fontWeight: '700',
             fontStyle: 'italic',
             stroke: 'white',
             dropShadow: {
@@ -33,8 +34,9 @@ export class PlayButton extends PIXI.Container {
                 alpha: 0.5,
             },
         });
-        text.anchor.set(0.5);
-        text.position.set(50, 23);
+
+        text.anchor.set(0.5, 0.5);
+        text.position.set(this.button.width / 2, this.button.height / 2);
         this.text = text;
 
         this.button.pivot.set(this.button.width / 2, this.button.height / 2);
@@ -71,6 +73,36 @@ export class PlayButton extends PIXI.Container {
     enableButton(): void {
         this.button.eventMode = 'static';
         this.button.alpha = 1;
+    }
+    createGradient(width: number, height: number, radius: number): PIXI.Texture {
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+
+        const context = canvas.getContext('2d');
+        if (context) {
+            const gradient = context.createLinearGradient(0, 0, width, 0);
+            gradient.addColorStop(0, '#A855F7'); 
+            gradient.addColorStop(1, '#D946EF'); 
+
+
+            context.beginPath();
+            context.moveTo(radius, 0);
+            context.lineTo(width - radius, 0);
+            context.quadraticCurveTo(width, 0, width, radius); 
+            context.lineTo(width, height - radius); 
+            context.quadraticCurveTo(width, height, width - radius, height); 
+            context.lineTo(radius, height); 
+            context.quadraticCurveTo(0, height, 0, height - radius);
+            context.lineTo(0, radius);
+            context.quadraticCurveTo(0, 0, radius, 0);
+            context.closePath();
+            context.clip()
+            context.fillStyle = gradient;
+            context.fillRect(0, 0, width, height);
+        }
+
+        return PIXI.Texture.from(canvas);
     }
 
     handleEvents(event: Event) {
