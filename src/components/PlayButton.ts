@@ -36,7 +36,7 @@ export class PlayButton extends PIXI.Container {
         });
 
         text.anchor.set(0.5, 0.5);
-        text.position.set(this.button.width / 2, this.button.height / 2);
+        text.position.set(this.button.width / 2 + 2, this.button.height / 2 + 2);
         this.text = text;
 
         this.button.pivot.set(this.button.width / 2, this.button.height / 2);
