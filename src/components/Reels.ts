@@ -7,27 +7,30 @@ import '@pixi/spine-pixi';
 import * as PIXI from 'pixi.js';
 import { CONSTANTS, EVENTS } from '../lib/constants.js';
 import { addEventListeners } from '../helpers/addEventListeners';
-import data from '../assets/json/winnings.json';
+
 import { WinCalculator } from '../helpers/winCalculator.js';
 import { buildReels } from './buildReels';
 import { animateReels } from './animateReels';
+import data from '../assets/json/winnings.json';
 
 
 
-export default class Reels extends PIXI.Container {
+export class Reels extends PIXI.Container {
     private _reels: Array<any> = [];
     private slotTextures!: Texture[];
     private symbolKeys: string[] = [];
     private symbolSize: number;
     private reelWidth: number;
-
-    constructor() {
+    newGrid: number[][] = [];
+    app: any;
+    constructor(app: any) {
         super();
+        addEventListeners(this);
         this.symbolKeys = CONSTANTS.SYMBOLS.KEYS;
         this.symbolSize = CONSTANTS.GRID.SYMBOL_SIZE;
         this.reelWidth = CONSTANTS.GRID.REEL_WIDTH;
+        this.app = app;
         this.initializeTextures();
-        addEventListeners(this);
     }
 
  async loadAssets() {
@@ -47,11 +50,7 @@ export default class Reels extends PIXI.Container {
 
 
     public startPlay(app: any) {
-        animateReels(this);
-    }
-
-    get(index: number): any {
-        return this._reels[index];
+        animateReels(this)
     }
 
     handleEvents(event: Event) {
@@ -60,35 +59,12 @@ export default class Reels extends PIXI.Container {
             case EVENTS.REEL.SPIN_START:
                 break;
             case EVENTS.REEL.SPIN_COMPLETE:
+                this.checkWin()
                 break;
         }
     }
 
-
-    // private getCurrentGrid(): number[][] {
-    //     const grid: number[][] = [];
-        
-    //     for (let row = 0; row < 5; row++) {
-    //         grid[row] = [];
-    //         for (let col = 0; col < CONSTANTS.GRID.SIZE; col++) {
-    //             const reel = this._reels[col];
-    //             const symbol = reel.symbols[row];
-    //             const symID = symbol.texture.label
-    //             console.log('symID', symID)
-    //            // const symID = this.symbolKeys.indexOf(symbol.texture.textureCacheIds[0])
-    //                 //.split('/').pop().split('.')[0]);
-    //             grid[row][col] = symID;
-    //         }
-    //     }
-    //     console.log('grid', grid)
-    //     return grid;
-    // }
-
-//    async checkWin() {
-//         const currentGrid = this.getCurrentGrid();
-//         const winnings = await fetch('assets/json/winnings.json')
-//         .then(response => response.json())
-
-//         WinCalculator.checkWinLines(currentGrid, winnings.winlines, CONSTANTS.GRID.SIZE, this.gridContainer, this.app);
-//     }
+    checkWin() {
+        WinCalculator.checkWinLines(this.newGrid, data.winlines, CONSTANTS.GRID.SIZE, this.app);
+    }
 } 

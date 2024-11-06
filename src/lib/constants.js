@@ -3,7 +3,7 @@ export const EVENTS = {
         SPIN_START: 'reel:spin_start',
         SPIN_COMPLETE: 'reel:spin_complete',
         SPIN_STOP: 'reel:spin_stop',
-        UPDATE: 'reel:update'
+        UPDATE: 'reel:update',
     },
     GAME: {
         START: 'game:start',

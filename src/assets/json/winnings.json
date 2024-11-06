@@ -18,6 +18,26 @@
       ]
     },
     {
+      "payout": 20,
+      "positions":[ 
+        {
+          "column": 2,
+          "row": 2,
+          "symID": 2
+        }
+      ]
+    },
+    {
+      "payout": 30,
+      "positions":[ 
+        {
+          "column": 3,
+          "row": 3,
+          "symID": 5
+        }
+      ]
+    },
+    {
       "payout": 100,
       "positions": [
         {

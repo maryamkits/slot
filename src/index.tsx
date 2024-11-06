@@ -3,9 +3,9 @@ import {
     Application,
     Graphics,
   } from 'pixi.js';
-  import Reels from './components/Reels';
-  import {PlayButton} from './components/PlayButton';
+  import { PlayButton} from './components/PlayButton';
   import { LoaderScreen } from './components/loader';
+import { Reels } from './components/Reels';
   
   (async () =>
   {
@@ -19,7 +19,7 @@ import {
 
     document.body.appendChild(app.canvas);
 
-    const reels = new Reels();
+    const reels = new Reels(app);
 
     const loadingScreen = new LoaderScreen(app);
     let progress = 0;
@@ -27,7 +27,6 @@ import {
     const loadInterval = setInterval(() => {
         progress += 0.1;
         loadingScreen.updateProgress(Math.min(progress, 1));
-        
         if (progress >= 1) {
         clearInterval(loadInterval);
         loadingScreen.destroy();

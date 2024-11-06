@@ -1,7 +1,9 @@
 import { WinText } from '../components/WinText';
 
 export class WinCalculator {
-    static checkWinLines(grid, winlines, gridSize, gridContainer, app) {
+
+    static checkWinLines(originalGrid , winlines, gridSize, app) {
+        const grid = originalGrid.slice(0, 5).map(row => row.slice(0, 5));
         let totalWin = 0;
         let winningLines = [];
         
@@ -26,7 +28,7 @@ export class WinCalculator {
                 
                 winline.positions.forEach(pos => {
                     const symbolIndex = pos.row * gridSize + pos.column;
-                    const symbol = gridContainer.children[symbolIndex];
+                    const symbol = app.stage.children[symbolIndex];
                     if (symbol) {
                         symbol.alpha = 0.5;
                         setTimeout(() => {
