@@ -1,23 +1,6 @@
 import * as PIXI from "pixi.js";
 import { EVENTS, CONSTANTS } from '../lib/constants';
 
-
-const INITIAL_GRID = [
-    [3, 1, 2, 3, 4],
-    [4, 0, 1, 2, 5],
-    [5, 1, 2, 4, 5],
-    [5, 0, 1, 2, 3],
-    [4, 1, 2, 5, 5]
-  ];
-//    const newGrid =  
-//    [[ 5, 0, 1, 2, 3, 4 ],
-//     [ 7, 0, 0, 2, 3, 0 ],
-//     [ 5, 9, 1, 2, 3, 4 ],
-//     [ 5, 0, 1, 2, 1, 4 ],
-//     [ 5, 0, 1, 2, 3, 4 ],
-//     [ 7, 7, 7, 7, 7, 4 ],
-// ];
-
 export function animateReels(context) {
     setupTicker(context);
     updateTicker(context);
@@ -50,7 +33,6 @@ export function animateReels(context) {
     }
 }
 
-// Animation ticker for smooth transitions
 function setupTicker(context) {
     PIXI.Ticker.shared.add(() => {
         const now = Date.now();
@@ -74,7 +56,6 @@ function setupTicker(context) {
     });
 }
 
-// Visual update ticker for reel spinning
 function updateTicker(context) {
     context.newGrid = generateNewGrid();
     PIXI.Ticker.shared.add(() => {
@@ -123,7 +104,6 @@ function tweenTo(tween, context) {
 }
 
 const reelsComplete = () => {
-    console.log('dispatch reelsComplete')
     window.dispatchEvent(new CustomEvent(EVENTS.REEL.SPIN_COMPLETE));
 };
 

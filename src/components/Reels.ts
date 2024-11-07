@@ -54,13 +54,12 @@ export class Reels extends PIXI.Container {
     }
 
     handleEvents(event: Event) {
-        console.log('handleEvents', event.type);
         switch (event.type) {
             case EVENTS.REEL.SPIN_START:
                 break;
             case EVENTS.REEL.SPIN_COMPLETE:
                 this.checkWin()
-                break;
+            break;
         }
     }
 

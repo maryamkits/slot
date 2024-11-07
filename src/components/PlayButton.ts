@@ -1,8 +1,7 @@
 import * as PIXI from "pixi.js";
 import { gsap } from "gsap";
-import { EventEmitter } from 'events';
 import { EVENTS } from "../lib/constants.js";
-import { addEventListeners } from "../helpers/addEventListeners";
+import { addEventListeners, addKeyboardListener } from "../helpers/addEventListeners";
 
 export class PlayButton extends PIXI.Container {
     private button: PIXI.Sprite;
@@ -10,6 +9,7 @@ export class PlayButton extends PIXI.Container {
     constructor(screenWidth: number, screenHeight: number) {
         super();
         addEventListeners(this);
+        addKeyboardListener(this)
         const width = 120;
         const height = 60;
         const radius = 10;
@@ -46,15 +46,7 @@ export class PlayButton extends PIXI.Container {
         this.button.cursor = 'pointer';
         this.text.cursor = 'pointer';
 
-        this.button.on('pointerover', () => this.buttonScaleDown());
-        this.button.on('pointerout', () => this.buttonScaleUp());
-
-        this.button.addListener('pointerdown', () => {
-            this.buttonScaleDown();
-            this.emit('playButtonClicked');
-        });
-        this.button.on('pointerup', () => this.buttonScaleUp());
-
+        this.addBtnListeners();
         this.addChild(this.button, this.text);
     }
 
@@ -67,12 +59,17 @@ export class PlayButton extends PIXI.Container {
         gsap.to(this.text.scale, { x: 1, y: 1, duration: 0.2 });
     } 
      disableButton(): void {
-        this.button.eventMode = 'none';
+        this.buttonScaleDown()
+        this.button.cursor = 'not-allowed';
         this.button.alpha = 0.7;
+        this.removeBtnListeners();
     }
     enableButton(): void {
+        this.buttonScaleUp()
+        this.button.cursor = 'pointer';
         this.button.eventMode = 'static';
         this.button.alpha = 1;
+        this.addBtnListeners();
     }
     createGradient(width: number, height: number, radius: number): PIXI.Texture {
         const canvas = document.createElement('canvas');
@@ -105,13 +102,26 @@ export class PlayButton extends PIXI.Container {
         return PIXI.Texture.from(canvas);
     }
 
+    addBtnListeners = () => {
+        this.button.on('pointerover', () => this.buttonScaleDown());
+        this.button.on('pointerout', () => this.buttonScaleUp());
+        this.button.on('pointerup', () => this.buttonScaleUp());
+        this.button.addEventListener('pointerdown', () => {
+            this.emit('playButtonClicked');
+        });
+    }
+    removeBtnListeners = () => {
+        this.button.removeAllListeners();
+    }
+
     handleEvents(event: Event) {
         console.log('handleEvents', event.type);
         switch (event.type) {
             case EVENTS.REEL.SPIN_START:
                 this.disableButton();
                 break;
-            case EVENTS.REEL.SPIN_COMPLETE:
+            case EVENTS.GAME.END:
+                console.log('enableButton');
                 this.enableButton();
                 this.buttonScaleUp();
                 break;

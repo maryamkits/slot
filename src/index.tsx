@@ -3,7 +3,8 @@ import {
     Application,
     Graphics,
   } from 'pixi.js';
-  import { PlayButton} from './components/PlayButton';
+  import { PlayButton } from './components/PlayButton';
+  import { Title } from './components/Title';
   import { LoaderScreen } from './components/loader';
 import { Reels } from './components/Reels';
   
@@ -55,9 +56,11 @@ import { Reels } from './components/Reels';
   bottom.addChild(SpinButton);
 
   SpinButton.on('playButtonClicked', () => {
-    console.log('playButtonClicked');
     reels.startPlay(app);
 });
+
+const title = new Title(app.screen.width, app.screen.height);
+top.addChild(title);
   
     app.stage.addChild(top);
     app.stage.addChild(bottom);
